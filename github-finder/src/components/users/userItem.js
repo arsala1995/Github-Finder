@@ -2,7 +2,8 @@ import React from 'react'
 import propTypes from 'prop-types'
 
  const UserItem = (props) => {
-
+  //receives user from Users and will print out the user's name and will give it access to go to the more information about user
+  
     const { login, avatar_url, html_url } = props.user;
 
     return (

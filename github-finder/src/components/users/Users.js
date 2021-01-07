@@ -1,35 +1,31 @@
-import React, { Component } from 'react'
+import React from 'react'
 import UserItem from './userItem'
-export class Users extends Component {
+import Spinner from '../layout/Spinner'
+import PropTypes from 'prop-types'
 
-  state = {
-    users: [
-      { 
-        id: '1',
-        login: 'mojombo',
-        avatar_url: 'https://avatars0.githubusercontent.com/u/1?v=4',
-        html_url: 'https://github.com/mojombo'
-      },
-      {
-        id: '2',
-        login: 'defunkt',
-        avatar_url: 'https://avatars0.githubusercontent.com/u/2?v=4',
-        html_url: 'https://github.com/defunkt'
-      }
+const Users = (props) => {
+  //users function where it will map over all the users received from the API call and will pass it to UserItem to give css design to each one of them.
+  
+  if(props.loading) {
+    return <Spinner />
+  } else {
 
-  ]
-};
-
-  render() {
     return (
       <div style={userStyle}>
-        {this.state.users.map(user => (
+        {props.users.map(user => (
           <UserItem key={user.id} user={user} />
         ))}
       </div>
     );
   }
-}
+ 
+  }
+
+  Users.propTypes = {
+    users: PropTypes.array.isRequired,
+    loading: PropTypes.bool.isRequired
+
+  }
 
 const userStyle = {
   display: 'grid',

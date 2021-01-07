@@ -3,7 +3,8 @@ import propTypes from 'prop-types'
 
 
 const NavBar = (props) => {
-
+  //navbar where the title will be shown with the background color and github icon
+  
   return (
       <nav className='navbar bg-primary'>
         <h1>
