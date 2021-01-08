@@ -13,23 +13,28 @@ class App extends Component {
   }
 
 
-  async componentDidMount() {
-    //this will fetch data as soon as the page is opened so the user can receive the data
-    this.setState({ loading: true })
-    const res = await axios.get(`https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`)
-    //the state will be set as soon as the data is received.
-    this.setState({ users: res.data, loading: false })
+  //search github users function that is passed to search file as props
+  searchUsers = async (text) => {
 
+    this.setState({ loading: true });
+    //fetches data from the github api
+    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`);
+    
+    // //the state will be set as soon as the data is received.
+    this.setState({ users: res.data.items, loading: false })
+  };
 
+  //clear users from state
+  clearUsers = () => {
+    this.setState({ users: [], loading: false });
   }
-
 
   render() {
     return (
       <div className="App">
         <NavBar />
         <div className="container">
-          <Search />
+          <Search searchUsers={this.searchUsers} clearUsers={this.clearUsers} showClear={this.state.users.length > 0 ? true: false}/>
         <Users loading={this.state.loading} users={this.state.users} />
         </div>
 
