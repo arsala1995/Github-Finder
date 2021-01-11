@@ -30,7 +30,7 @@ class App extends Component {
     this.setState({ users: res.data.items, loading: false })
   };
 
-  //Get single github user
+  //Get single github user using user's login name or username and the information will be passed as props to the user file
   getUser = async (username) => {
     this.setState({ loading: true });
     //fetches data from the github api
