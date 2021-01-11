@@ -14,6 +14,7 @@ class App extends Component {
     //initial states for users and loading
     users: [],
     user: {},
+    repos: [],
     loading: false,
     alert: null
   }
@@ -38,6 +39,16 @@ class App extends Component {
     
     // //the state will be set as soon as the data is received.
     this.setState({ user: res.data, loading: false })
+  } 
+
+  // Get users repos
+  getUserRepos = async (username) => {
+    this.setState({ loading: true });
+    //fetches data from the github api
+    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`);
+    
+    // //the state will be set as soon as the data is received.
+    this.setState({ repos: res.data, loading: false })
   } 
 
   //clear users from state
@@ -71,7 +82,7 @@ class App extends Component {
           />
           <Route exact path="/about" component={About}></Route>
           <Route exact path='/user/:login' render={props => (
-            <User {...props} getUser={this.getUser} user={this.state.user} loading={this.state.loading}/>
+            <User {...props} getUser={this.getUser} getUserRepos={this.getUserRepos} user={this.state.user} repos={this.state.repos} loading={this.state.loading}/>
           )} />
         </Switch>
         </div>
