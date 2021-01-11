@@ -1,5 +1,6 @@
 import React from 'react'
 import propTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
  const UserItem = (props) => {
   //receives user from Users and will print out the user's name and will give it access to go to the more information about user
@@ -15,9 +16,9 @@ import propTypes from 'prop-types'
         <h3>{login}</h3>
 
         <div>
-          <a href={html_url} className="btn btn-dark btn-sm my-1">
+          <Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">
             More
-          </a>
+          </Link>
         </div>
       </div>
     )
