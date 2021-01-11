@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Alert = ({ alert }) => {
+const Alert = ({ alert }) => {
   return (
    alert !== null && (
    
@@ -11,3 +11,5 @@ export const Alert = ({ alert }) => {
    )
   )
 }
+
+export default Alert
