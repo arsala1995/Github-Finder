@@ -19,12 +19,24 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
 
+  let githubClientId;
+  let githubClientSecret;
+
+  if(process.env.NODE_ENV !== 'production') {
+    githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+    githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+
+  } else {
+    githubClientId = process.env.GITHUB_CLIENT_ID;
+    githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+  }
+
   //search github users function that is passed to search file as props
   const searchUsers = async (text) => {
 
     setLoading(true);
     //fetches data from the github api
-    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`);
+    const res = await axios.get(`https://api.github.com/search/users?q=${text}&client_id=${githubClientId}&client_secret=${githubClientSecret}`);
     
     // //the state will be set as soon as the data is received.
     setUsers(res.data.items)
@@ -35,7 +47,7 @@ const App = () => {
   const getUser = async (username) => {
     setLoading(true);
     //fetches data from the github api
-    const res = await axios.get(`https://api.github.com/users/${username}?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`);
+    const res = await axios.get(`https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`);
     
     // //the state will be set as soon as the data is received.
     setUser(res.data);
@@ -46,7 +58,7 @@ const App = () => {
   const getUserRepos = async (username) => {
     setLoading(true);
     //fetches data from the github api
-    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_ID}`);
+    const res = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`);
     
     // //the state will be set as soon as the data is received.
     setRepos(res.data);
