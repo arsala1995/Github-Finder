@@ -1,46 +1,46 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 
-export class Search extends Component {
+const Search = (props) => {
+// Search tab where a user will write the name in the text box and then it will be seen in database and its data will be returned.
 
-state = {
-  text: ''
-};
+const [text, setText] = useState('');
 
-static proTypes = {
+
+const onSubmit = (e) => {
+  e.preventDefault()
+  if(text === '' ) {
+    props.setAlert('Please enter something', 'light')
+  } else {
+    props.searchUsers(text);
+    setText('')
+
+  }
+}
+
+const onChange = (e) => {
+  setText( e.target.value);
+}
+  
+
+    return (
+      <div>
+        <form onSubmit={onSubmit} className="form">
+          <input type="text" name="text" placeholder="Search users.." value={text} onChange={onChange}/>
+          <input type="submit" value="search" className="btn btn-dark btn-block" />
+        </form >
+        {props.showClear && <button className="btn btn-light btn-block" onClick={props.clearUsers}>Clear</button> }
+      </div>
+    )
+  
+}
+
+Search.proTypes = {
   searchUsers: PropTypes.func.isRequired,
   clearUsers: PropTypes.func.isRequired,
   showClear: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired
-}
-
-onSubmit = (e) => {
-  e.preventDefault()
-  if(this.state.text === '' ) {
-    this.props.setAlert('Please enter something', 'light')
-  } else {
-    this.props.searchUsers(this.state.text);
-    this.setState({ text: ''})
-
-  }
-}
-
-onChange = (e) => {
-  this.setState({text: e.target.value});
-}
-  render() {
-
-    return (
-      <div>
-        <form onSubmit={this.onSubmit} className="form">
-          <input type="text" name="text" placeholder="Search users.." value={this.state.text} onChange={this.onChange}/>
-          <input type="submit" value="search" className="btn btn-dark btn-block" />
-        </form >
-        {this.props.showClear && <button className="btn btn-light btn-block" onClick={this.props.clearUsers}>Clear</button> }
-      </div>
-    )
-  }
 }
 
 export default Search
