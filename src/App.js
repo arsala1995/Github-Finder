@@ -9,6 +9,7 @@ import './App.css';
 import About from "./components/pages/About"
 import axios from 'axios'
 
+
 const App = () => {
 
   //initial states for users and loading
@@ -16,7 +17,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   //search github users function that is passed to search file as props
   const searchUsers = async (text) => {
@@ -60,7 +61,7 @@ const App = () => {
 
   // set alert if nothing is typed
   const showAlert = (msg, type) => {
-    setAlert({msg:msg, type:type})
+    setAlert({ msg, type})
     // Timeout to remove alert message after five seconds
     setTimeout(() => setAlert(null), 5000);
   }
