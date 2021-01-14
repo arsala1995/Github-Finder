@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
  const UserItem = (props) => {
   //receives user from Users and will print out the user's name and will give it access to go to the more information about user
   
-    const { login, avatar_url, html_url } = props.user;
+    const { login, avatar_url } = props.user;
 
     return (
       <div className="card text-center">
